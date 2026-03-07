@@ -7,10 +7,10 @@ import os from "node:os";
 import path from "node:path";
 import readline from "node:readline";
 
-const APP_ID = "cbgames-lan-host-v1";
+const APP_ID = "cbgames-launcher-host-v1";
 const DEFAULT_PORT = 8941;
 const DEFAULT_HOST = "0.0.0.0";
-const DEFAULT_STORE_DIR = path.resolve(process.cwd(), ".cbgames-lan-host");
+const DEFAULT_STORE_DIR = path.resolve(process.cwd(), ".cbgames-launcher-host");
 const DEFAULT_MAX_UPLOAD_BYTES = 2 * 1024 * 1024 * 1024; // 2 GiB
 const DEFAULT_OTC_TTL_MS = 10 * 60 * 1000; // 10 minutes
 const INDEX_FILE_NAME = "library.json";
@@ -70,22 +70,22 @@ function parseArgs(argv) {
 function printHelp() {
   console.log(
     [
-      "CBGames LAN Host",
+      "CBGames launcher Host",
       "",
       "Usage:",
-      "  node scripts/lan-host.mjs [--host 0.0.0.0] [--port 8941] [--store ./.cbgames-lan-host]",
+      "  node scripts/launcher-host.mjs [--host 0.0.0.0] [--port 8941] [--store ./.cbgames-launcher-host]",
       "",
       "Options:",
       "  --host <ip|name>        Bind host (default: 0.0.0.0)",
       "  --port, -p <port>       Bind port (default: 8941)",
-      "  --store <path>          Storage directory (default: ./.cbgames-lan-host)",
+      "  --store <path>          Storage directory (default: ./.cbgames-launcher-host)",
       "  --max-upload-mb <mb>    Max upload size in MB (default: 2048)",
       "  --help, -h              Show this help"
     ].join("\n")
   );
 }
 
-function getLanIpv4Addresses() {
+function getLauncherIpv4Addresses() {
   const interfaces = os.networkInterfaces();
   const addresses = [];
   for (const key of Object.keys(interfaces)) {
@@ -106,7 +106,7 @@ function resolveAnnounceUrls(host, port) {
   if (!normalizedHost || normalizedHost === "0.0.0.0" || normalizedHost === "::") {
     out.add("http://localhost:" + port);
     out.add("http://127.0.0.1:" + port);
-    for (const ip of getLanIpv4Addresses()) {
+    for (const ip of getLauncherIpv4Addresses()) {
       out.add("http://" + ip + ":" + port);
     }
     return Array.from(out);
@@ -298,11 +298,11 @@ function toPublicItem(item) {
 
 function createHostPage() {
   return `<!doctype html>
-<html lang="en">
+<html launcherg="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>CBGames LAN Host</title>
+  <title>CBGames launcher Host</title>
   <style>
     :root {
       color-scheme: dark;
@@ -449,8 +449,8 @@ function createHostPage() {
 <body>
   <div class="layout">
     <section class="card">
-      <h1>CBGames LAN Host</h1>
-      <p>Host dashboard for shared LAN files. Manage files from the host terminal only.</p>
+      <h1>CBGames launcher Host</h1>
+      <p>Host dashboard for shared launcher files. Manage files from the host terminal only.</p>
       <div id="hostUrls" class="url-list"></div>
       <p>Manifest endpoint: <code id="manifestEndpoint">/api/manifest</code></p>
       <p>Client upload endpoint (OTC): <code>/api/client-upload?otc=CODE</code></p>
@@ -504,7 +504,7 @@ function createHostPage() {
         const link = document.createElement("a");
         link.href = url;
         link.textContent = url;
-        link.target = "_blank";
+        link.target = "_blauncherk";
         link.rel = "noreferrer noopener";
         row.append(link);
         hostUrls.append(row);
@@ -541,7 +541,7 @@ function createHostPage() {
         const download = document.createElement("a");
         download.href = item.downloadUrl;
         download.textContent = "Download";
-        download.target = "_blank";
+        download.target = "_blauncherk";
         download.rel = "noreferrer noopener";
 
         row.append(meta, visibility, download);
@@ -978,7 +978,7 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.on("error", (error) => {
-  console.error("CBGames LAN host failed to start:", error && error.message ? error.message : String(error));
+  console.error("CBGames launcher host failed to start:", error && error.message ? error.message : String(error));
   process.exit(1);
 });
 
@@ -1099,7 +1099,7 @@ function startCommandConsole() {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
-    prompt: "lan-host> "
+    prompt: "launcher-host> "
   });
 
   rl.on("line", async (line) => {
@@ -1209,7 +1209,7 @@ function startCommandConsole() {
   });
 
   rl.on("close", () => {
-    console.log("Stopping CBGames LAN host...");
+    console.log("Stopping CBGames launcher host...");
     server.close(() => {
       process.exit(0);
     });
@@ -1221,7 +1221,7 @@ function startCommandConsole() {
 
 server.listen(args.port, args.host, () => {
   const info = getInfoPayload();
-  console.log("CBGames LAN host running.");
+  console.log("CBGames launcher host running.");
   console.log("Store directory:", info.storeDir);
   console.log("Max upload size:", formatBytes(info.maxUploadBytes));
   console.log("Host URLs:");
