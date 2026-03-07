@@ -152,7 +152,7 @@ function sanitizeZipName(rawName) {
 
 function setCorsHeaders(res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET,PUT,OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,PUT,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 }
 
@@ -559,7 +559,7 @@ function createHostPage() {
       currentItems = Array.isArray(payload.items) ? payload.items : [];
       renderItems();
     }
-  
+
     Promise.all([loadInfo(), loadItems()])
       .then(() => setStatus("Host ready.", "success"))
       .catch((error) => setStatus(error.message || String(error), "error"));
@@ -830,7 +830,8 @@ async function deleteItem(itemId) {
   return item;
 }
 
-async function handleDownload(res, itemId) {
+async function handleDownload(res, itemId, options = {}) {
+  const headOnly = Boolean(options.headOnly);
   const item = getItemById(itemId);
   if (!item) {
     sendJson(res, 404, { error: "Item not found." });
@@ -852,6 +853,10 @@ async function handleDownload(res, itemId) {
   res.setHeader("Content-Type", "application/zip");
   res.setHeader("Content-Length", String(stat.size));
   res.setHeader("Content-Disposition", 'attachment; filename="' + escapeHtml(item.name) + '"');
+  if (headOnly) {
+    res.end();
+    return;
+  }
   fs.createReadStream(filePath).pipe(res);
 }
 
@@ -959,9 +964,9 @@ const server = http.createServer(async (req, res) => {
     }
 
     const downloadMatch = pathname.match(/^\/download\/([^/]+)$/);
-    if (downloadMatch && method === "GET") {
+    if (downloadMatch && (method === "GET" || method === "HEAD")) {
       const itemId = decodeURIComponent(downloadMatch[1]);
-      await handleDownload(res, itemId);
+      await handleDownload(res, itemId, { headOnly: method === "HEAD" });
       return;
     }
 
