@@ -559,7 +559,7 @@ function createHostPage() {
       currentItems = Array.isArray(payload.items) ? payload.items : [];
       renderItems();
     }
-
+  
     Promise.all([loadInfo(), loadItems()])
       .then(() => setStatus("Host ready.", "success"))
       .catch((error) => setStatus(error.message || String(error), "error"));
