@@ -1,0 +1,4 @@
+node_modules/
+.cbgames-lan-host/
+*.log
+.DS_Store
