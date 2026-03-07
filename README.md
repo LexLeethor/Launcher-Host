@@ -1,6 +1,6 @@
-# CBGames LAN Host
+# CBGames Launcher Host
 
-Standalone LAN host service for the CBGames Offline Launcher.
+Standalone launcher host service for the CBGames Offline Launcher.
 
 ## Features
 
@@ -22,13 +22,13 @@ npm run start
 or:
 
 ```bash
-node lan-host.mjs
+node host.mjs
 ```
 
 ## CLI options
 
 ```bash
-node lan-host.mjs --host 0.0.0.0 --port 8941 --store ./.cbgames-lan-host
+node host.mjs --host 0.0.0.0 --port 8941 --store ./.cbgames-launcher-host
 ```
 
 ## Host terminal commands
@@ -44,22 +44,3 @@ node lan-host.mjs --host 0.0.0.0 --port 8941 --store ./.cbgames-lan-host
 - `clear-otc`
 - `exit` / `quit`
 
-## Publish as its own GitHub repo
-
-From this folder:
-
-```bash
-git init
-git add .
-git commit -m "Initial CBGames LAN Host"
-# with GitHub CLI
-gh repo create cbgames-lan-host --public --source=. --remote=origin --push
-```
-
-If you do not use GitHub CLI, create the repo in GitHub first, then:
-
-```bash
-git remote add origin <your-repo-url>
-git branch -M main
-git push -u origin main
-```
