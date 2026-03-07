@@ -4,12 +4,12 @@
   "description": "Standalone LAN host for CBGames Offline Launcher",
   "type": "module",
   "bin": {
-    "cbgames-lan-host": "./lan-host.mjs"
+    "cbgames-lan-host": "./host.mjs"
   },
   "scripts": {
-    "start": "node ./lan-host.mjs",
-    "host": "node ./lan-host.mjs",
-    "check": "node --check ./lan-host.mjs"
+    "start": "node ./host.mjs",
+    "host": "node ./host.mjs",
+    "check": "node --check ./host.mjs"
   },
   "engines": {
     "node": ">=18"
