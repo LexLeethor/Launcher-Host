@@ -6,8 +6,10 @@ Standalone launcher host service for the CBGames Offline Launcher.
 
 - Serves shared host files through `/api/manifest`.
 - Supports launcher OTC uploads through `PUT /api/client-upload?otc=CODE`.
-- Browser dashboard is read-only.
-- Host-only management (share/delete) is done from terminal commands.
+- Browser dashboard supports admin sign-in and bundle management.
+- Manage bundles from the web UI (upload, rename, share/private, delete).
+- Change the admin username/password from the web UI.
+- The launcher can be downloaded from the host (mirrors the latest GitHub release).
 
 ## Requirements
 
@@ -44,3 +46,10 @@ node host.mjs --host 0.0.0.0 --port 8941 --store ./.cbgames-launcher-host
 - `clear-otc`
 - `exit` / `quit`
 
+## Web UI admin
+
+- After sign-in you can upload, rename, share/private, delete bundles, and change credentials.
+
+## Launcher download
+
+- The host mirrors the latest GitHub release and serves it at `/download/launcher`.
