@@ -783,6 +783,18 @@ function createHostPage() {
         <p id="uploadStatus" class="status"></p>
       </div>
 
+      <div class="card requires-auth hidden">
+        <div class="card-head">
+          <h2>One-Time Upload Code</h2>
+          <span class="section-note">Generate an OTC for client uploads.</span>
+        </div>
+        <div class="row">
+          <input id="otcMinutes" type="text" placeholder="Minutes (default 10)">
+          <button id="otcBtn">Generate Code</button>
+        </div>
+        <p id="otcStatus" class="status"></p>
+      </div>
+
       <div class="card">
         <div class="card-head">
           <h2>Hosted Files</h2>
@@ -877,6 +889,9 @@ function createHostPage() {
     const uploadShared = document.getElementById("uploadShared");
     const uploadBtn = document.getElementById("uploadBtn");
     const uploadStatus = document.getElementById("uploadStatus");
+    const otcMinutes = document.getElementById("otcMinutes");
+    const otcBtn = document.getElementById("otcBtn");
+    const otcStatus = document.getElementById("otcStatus");
     const currentPassword = document.getElementById("currentPassword");
     const newPassword = document.getElementById("newPassword");
     const changePasswordBtn = document.getElementById("changePasswordBtn");
@@ -1206,6 +1221,27 @@ function createHostPage() {
         await loadItems();
       } catch (error) {
         setStatus(uploadStatus, error.message || String(error), "error");
+      }
+    });
+
+    otcBtn.addEventListener("click", async () => {
+      try {
+        const minutes = otcMinutes.value.trim();
+        const payload = await api("/api/otc", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ minutes: minutes })
+        });
+        const expires = payload.expiresAt
+          ? new Date(payload.expiresAt).toLocaleTimeString()
+          : "";
+        setStatus(
+          otcStatus,
+          "Code " + payload.code + " valid until " + (expires || "expiry") + ".",
+          "success"
+        );
+      } catch (error) {
+        setStatus(otcStatus, error.message || String(error), "error");
       }
     });
 
@@ -1923,6 +1959,33 @@ const server = http.createServer(async (req, res) => {
           return;
         }
         sendJson(res, 400, { error: error && error.message ? error.message : "Password update failed." });
+        return;
+      }
+    }
+
+    if (method === "POST" && pathname === "/api/otc") {
+      const session = requireAuth(req, res);
+      if (!session) {
+        return;
+      }
+      try {
+        const body = await readJsonBody(req, 128 * 1024);
+        const minutes = Number(body.minutes);
+        const ttlMs = Number.isFinite(minutes) && minutes > 0
+          ? Math.round(minutes * 60 * 1000)
+          : DEFAULT_OTC_TTL_MS;
+        const issued = issueOneTimeCode(ttlMs);
+        sendJson(res, 200, {
+          code: issued.code,
+          expiresAt: issued.expiresAt
+        });
+        return;
+      } catch (error) {
+        if (error && error.code === "PAYLOAD_TOO_LARGE") {
+          sendJson(res, 413, { error: error.message || "Request body too large." });
+          return;
+        }
+        sendJson(res, 400, { error: error && error.message ? error.message : "OTC creation failed." });
         return;
       }
     }
