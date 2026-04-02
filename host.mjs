@@ -437,25 +437,27 @@ function createHostPage() {
       --accent-2: #a9e7ac;
       --danger: #ffb0b0;
       --warning: #e0d5b6;
+      --radius: 14px;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       min-height: 100vh;
-      background: linear-gradient(180deg, #101010 0%, #0b0b0b 100%);
+      background: var(--bg-0);
       color: var(--text);
+      line-height: 1.45;
     }
     header.topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 18px 24px;
+      padding: 16px 24px;
       border-bottom: 1px solid #2a2a2a;
-      background: linear-gradient(90deg, #171717, #141414);
+      background: #151515;
       position: sticky;
       top: 0;
       z-index: 5;
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(8px);
     }
     .brand {
       display: flex;
@@ -478,8 +480,9 @@ function createHostPage() {
       display: block;
     }
     .brand-title {
-      font-size: 16px;
-      font-weight: 600;
+      font-size: 17px;
+      font-weight: 650;
+      letter-spacing: 0.01em;
       margin: 0;
     }
     .brand-sub {
@@ -495,9 +498,10 @@ function createHostPage() {
       border: 1px solid #2f2f2f;
       background: #1e1e1e;
       color: #d0d0d0;
-      padding: 8px 12px;
-      border-radius: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
       font-size: 12px;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
     }
@@ -514,34 +518,40 @@ function createHostPage() {
     main.layout {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 24px;
+      padding: 28px 24px 32px;
       display: grid;
-      gap: 18px;
+      gap: 20px;
     }
     .page {
       display: grid;
-      gap: 18px;
+      gap: 20px;
     }
     .card {
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: var(--radius);
       background: var(--card);
-      padding: 18px;
+      padding: 20px;
       display: grid;
-      gap: 12px;
-      box-shadow: 0 18px 36px rgba(0,0,0,0.35);
+      gap: 14px;
+      box-shadow:
+        0 18px 36px rgba(0,0,0,0.30),
+        0 0 0 1px rgba(255,255,255,0.02) inset;
     }
     .card-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
+      flex-wrap: wrap;
     }
     h1, h2 {
       margin: 0;
       font-weight: 600;
     }
-    h2 { font-size: 16px; }
+    h2 {
+      font-size: 16px;
+      letter-spacing: 0.01em;
+    }
     p {
       margin: 0;
       color: var(--muted);
@@ -551,7 +561,7 @@ function createHostPage() {
     .row {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 10px 12px;
       align-items: center;
     }
     input[type="file"],
@@ -560,22 +570,40 @@ function createHostPage() {
     select,
     button,
     .button {
-      min-height: 40px;
-      border-radius: 12px;
+      min-height: 42px;
+      border-radius: 11px;
       border: 1px solid #3a3a3a;
       background: #121212;
       color: #f2f2f2;
-      padding: 0 12px;
+      padding: 0 13px;
       font-size: 13px;
+    }
+    input[type="text"],
+    input[type="password"],
+    select {
+      min-width: 180px;
+    }
+    input[type="file"] {
+      padding-top: 8px;
+      padding-bottom: 8px;
     }
     button, .button {
       cursor: pointer;
-      background: #1e1e1e;
+      background: #1f1f1f;
       transition: all 0.2s ease;
     }
     button:hover, .button:hover {
       border-color: #5f5f5f;
       color: #ffffff;
+      transform: translateY(-1px);
+    }
+    button:focus-visible,
+    .button:focus-visible,
+    input:focus-visible,
+    select:focus-visible {
+      outline: none;
+      border-color: #5f5f5f;
+      box-shadow: 0 0 0 2px rgba(141, 196, 255, 0.25);
     }
     .button {
       display: inline-flex;
@@ -593,12 +621,15 @@ function createHostPage() {
     }
     .url-list {
       display: grid;
-      gap: 6px;
+      gap: 8px;
     }
     .url-list a {
       color: var(--accent);
       text-decoration: none;
       font-size: 13px;
+      display: inline-flex;
+      width: fit-content;
+      padding: 3px 0;
     }
     .status {
       color: #d0d0d0;
@@ -611,23 +642,23 @@ function createHostPage() {
     .hidden { display: none !important; }
     .stat-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
       gap: 12px;
     }
     .stat {
-      padding: 12px;
+      padding: 13px 14px;
       border-radius: 12px;
       border: 1px solid #2e2e2e;
-      background: #121212;
+      background: #131313;
     }
     .stat-label {
       color: var(--muted);
       font-size: 12px;
     }
     .stat-value {
-      font-size: 20px;
-      font-weight: 600;
-      margin-top: 4px;
+      font-size: 22px;
+      font-weight: 650;
+      margin-top: 5px;
     }
     .items {
       display: grid;
@@ -646,9 +677,14 @@ function createHostPage() {
       align-items: center;
       border: 1px solid #282828;
       border-radius: 12px;
-      background: #151515;
+      background: #161616;
       padding: 10px 12px;
       font-size: 13px;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .item:hover {
+      border-color: #3a3a3a;
+      transform: translateY(-1px);
     }
     .item-meta strong {
       display: block;
@@ -670,6 +706,7 @@ function createHostPage() {
       gap: 6px;
       flex-wrap: wrap;
       justify-content: flex-end;
+      align-items: center;
     }
     .item-flag {
       font-size: 11px;
@@ -701,6 +738,206 @@ function createHostPage() {
       font-size: 12px;
       color: var(--muted);
     }
+    .auth-shell {
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+      display: grid;
+      gap: 16px;
+    }
+    .auth-card {
+      display: grid;
+      gap: 14px;
+    }
+    .auth-head {
+      display: grid;
+      gap: 6px;
+    }
+    .auth-title {
+      font-size: 20px;
+      font-weight: 650;
+      margin: 0;
+    }
+    .auth-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+    .auth-form {
+      display: grid;
+      gap: 12px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+    .field label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .field input,
+    .field select {
+      width: 100%;
+      min-width: 0;
+    }
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .form-actions .button,
+    .form-actions button {
+      min-width: 140px;
+    }
+    .separator {
+      height: 1px;
+      background: #2a2a2a;
+      border: 0;
+      margin: 2px 0;
+    }
+    @media (max-width: 960px) {
+      header.topbar {
+        padding: 14px 16px;
+      }
+      main.layout {
+        padding: 18px 14px 24px;
+      }
+      .card {
+        padding: 16px;
+      }
+      .item {
+        grid-template-columns: 1fr;
+      }
+      .item-actions {
+        justify-content: flex-start;
+      }
+      .row > * {
+        width: 100%;
+      }
+      .row .button,
+      .row button {
+        width: auto;
+      }
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .form-actions .button,
+      .form-actions button {
+        width: 100%;
+      }
+    }
+    /* Setup Launcher Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.78);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.hidden { display: none; }
+    .modal-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      width: min(540px, calc(100vw - 32px));
+      max-height: calc(100vh - 64px);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .modal-head h2 { margin: 0; font-size: 17px; }
+    .modal-close-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 4px 8px;
+      font-size: 16px;
+      border-radius: 6px;
+      min-height: unset;
+    }
+    .modal-close-btn:hover { color: var(--text); }
+    .modal-step { display: flex; flex-direction: column; gap: 12px; }
+    .modal-step.hidden { display: none; }
+    .modal-step > p { margin: 0; }
+    .modal-footer {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+    .bundle-checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 240px;
+      overflow-y: auto;
+      padding: 2px;
+    }
+    .bundle-check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .bundle-check-item:hover { border-color: #4a4a4a; }
+    .bundle-check-item input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      min-height: unset;
+      min-width: unset;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+    .bundle-check-item-meta { display: flex; flex-direction: column; gap: 1px; }
+    .bundle-check-item-meta strong { font-size: 13px; }
+    .bundle-check-item-meta small { color: var(--muted); font-size: 11px; }
+    .setup-progress-bar {
+      height: 5px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .setup-progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+    .setup-log {
+      max-height: 160px;
+      overflow-y: auto;
+      padding: 8px 10px;
+      background: #0a0a0a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .setup-log-item { padding: 1px 0; }
+    .setup-log-item.ok { color: var(--accent-2); }
+    .setup-log-item.err { color: var(--danger); }
   </style>
 </head>
 <body>
@@ -830,45 +1067,127 @@ function createHostPage() {
           </div>
         </div>
         <div class="row">
-          <a id="launcherDownloadLink" class="button" href="/download/launcher">Download Launcher</a>
+          <button id="launcherDownloadBtn" class="button hidden">Download Launcher</button>
+          <button id="setupLauncherBtn" class="button hidden">Setup Launcher</button>
         </div>
       </div>
     </section>
 
-    <section class="page hidden" data-page="account">
-      <div class="card">
-        <h2>Account Settings</h2>
-        <p class="section-note">Update your admin username and password.</p>
-        <div class="row">
-          <input id="newUsername" type="text" placeholder="New username">
-          <input id="usernamePassword" type="password" placeholder="Current password">
-          <button id="changeUsernameBtn">Change Username</button>
+    <!-- Setup Launcher Modal -->
+    <div id="setupModal" class="modal-overlay hidden" aria-hidden="true">
+      <div class="modal-box">
+        <div class="modal-head">
+          <h2>Setup Launcher</h2>
+          <button class="modal-close-btn" id="setupModalClose" aria-label="Close">✕</button>
         </div>
-        <p id="usernameStatus" class="status"></p>
-      </div>
 
-      <div class="card">
-        <h2>Change Password</h2>
-        <div class="row">
-          <input id="currentPassword" type="password" placeholder="Current password" autocomplete="current-password">
-          <input id="newPassword" type="password" placeholder="New password" autocomplete="new-password">
-          <button id="changePasswordBtn">Change Password</button>
-          <button id="logoutBtn" class="requires-auth hidden">Sign Out</button>
+        <!-- Step 1: Select Bundles -->
+        <div id="setupStep1" class="modal-step">
+          <p>Choose shared bundles to auto-import when the launcher first opens:</p>
+          <div id="setupBundleList" class="bundle-checklist"></div>
+          <p id="setupBundleNote" class="section-note"></p>
+          <div class="modal-footer">
+            <button id="setupCancelBtn">Cancel</button>
+            <button id="setupNextBtn">Next →</button>
+          </div>
         </div>
-        <p id="passwordStatus" class="status"></p>
+
+        <!-- Step 2: Pick Folder -->
+        <div id="setupStep2" class="modal-step hidden">
+          <p>Select a folder — a <code>launcher/</code> subfolder will be created with <code>index.html</code>. Open that file in your browser and it will auto-import your selected bundles (host must be running).</p>
+          <p class="section-note">Requires Chrome/Edge. Or use <strong>Open in Browser</strong> to skip the file save and launch directly.</p>
+          <div class="modal-footer">
+            <button id="setupBackBtn">← Back</button>
+            <button id="setupOpenOnlyBtn">Open in Browser</button>
+            <button id="setupPickFolderBtn">Select Folder &amp; Save</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Progress -->
+        <div id="setupStep3" class="modal-step hidden">
+          <p id="setupProgressLabel">Setting up launcher...</p>
+          <div class="setup-progress-bar">
+            <div class="setup-progress-fill" id="setupProgressFill"></div>
+          </div>
+          <div id="setupLog" class="setup-log"></div>
+          <p id="setupStepStatus" class="status"></p>
+          <div class="modal-footer">
+            <button id="setupDoneBtn" class="hidden">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="page hidden" data-page="account">
+      <div class="auth-shell">
+        <div class="card auth-card">
+          <div class="auth-head">
+            <h2 class="auth-title">Account Settings</h2>
+            <p class="auth-sub">Manage your admin identity and login credentials.</p>
+          </div>
+
+          <form class="auth-form" onsubmit="return false;">
+            <div class="form-grid">
+              <div class="field">
+                <label for="newUsername">New Username</label>
+                <input id="newUsername" type="text" placeholder="Enter new username" autocomplete="username">
+              </div>
+              <div class="field">
+                <label for="usernamePassword">Current Password</label>
+                <input id="usernamePassword" type="password" placeholder="Enter current password" autocomplete="current-password">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button id="changeUsernameBtn">Update Username</button>
+            </div>
+          </form>
+          <p id="usernameStatus" class="status"></p>
+
+          <hr class="separator">
+
+          <form class="auth-form" onsubmit="return false;">
+            <div class="form-grid">
+              <div class="field">
+                <label for="currentPassword">Current Password</label>
+                <input id="currentPassword" type="password" placeholder="Enter current password" autocomplete="current-password">
+              </div>
+              <div class="field">
+                <label for="newPassword">New Password</label>
+                <input id="newPassword" type="password" placeholder="Enter new password" autocomplete="new-password">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button id="changePasswordBtn">Update Password</button>
+              <button id="logoutBtn" class="requires-auth hidden">Sign Out</button>
+            </div>
+          </form>
+          <p id="passwordStatus" class="status"></p>
+        </div>
       </div>
     </section>
 
     <section class="page hidden" data-page="signin">
-      <div class="card">
-        <h2>Admin Sign In</h2>
-        <p>Use your admin credentials to manage bundles and launcher updates.</p>
-        <div class="row">
-          <input id="loginUser" type="text" placeholder="Username" autocomplete="username">
-          <input id="loginPass" type="password" placeholder="Password" autocomplete="current-password">
-          <button id="loginBtn">Sign In</button>
+      <div class="auth-shell">
+        <div class="card auth-card">
+          <div class="auth-head">
+            <h2 class="auth-title">Admin Sign In</h2>
+            <p class="auth-sub">Sign in with your admin account to manage bundles, files, and launcher updates.</p>
+          </div>
+          <form class="auth-form" onsubmit="return false;">
+            <div class="field">
+              <label for="loginUser">Username</label>
+              <input id="loginUser" type="text" placeholder="Enter username" autocomplete="username">
+            </div>
+            <div class="field">
+              <label for="loginPass">Password</label>
+              <input id="loginPass" type="password" placeholder="Enter password" autocomplete="current-password">
+            </div>
+            <div class="form-actions">
+              <button id="loginBtn">Sign In</button>
+            </div>
+          </form>
+          <p id="authStatus" class="status"></p>
         </div>
-        <p id="authStatus" class="status"></p>
       </div>
     </section>
   </main>
@@ -905,18 +1224,39 @@ function createHostPage() {
     const launcherAsset = document.getElementById("launcherAsset");
     const launcherSize = document.getElementById("launcherSize");
     const launcherChecked = document.getElementById("launcherChecked");
-    const launcherDownloadLink = document.getElementById("launcherDownloadLink");
+    const launcherDownloadBtn = document.getElementById("launcherDownloadBtn");
+    const setupLauncherBtn = document.getElementById("setupLauncherBtn");
     const launcherSyncBtn = document.getElementById("launcherSyncBtn");
     const statTotal = document.getElementById("statTotal");
     const statShared = document.getElementById("statShared");
     const statPrivate = document.getElementById("statPrivate");
     const statStorage = document.getElementById("statStorage");
 
+    // Setup modal elements
+    const setupModal = document.getElementById("setupModal");
+    const setupModalClose = document.getElementById("setupModalClose");
+    const setupStep1 = document.getElementById("setupStep1");
+    const setupStep2 = document.getElementById("setupStep2");
+    const setupStep3 = document.getElementById("setupStep3");
+    const setupBundleList = document.getElementById("setupBundleList");
+    const setupBundleNote = document.getElementById("setupBundleNote");
+    const setupCancelBtn = document.getElementById("setupCancelBtn");
+    const setupNextBtn = document.getElementById("setupNextBtn");
+    const setupBackBtn = document.getElementById("setupBackBtn");
+    const setupPickFolderBtn = document.getElementById("setupPickFolderBtn");
+    const setupOpenOnlyBtn = document.getElementById("setupOpenOnlyBtn");
+    const setupProgressLabel = document.getElementById("setupProgressLabel");
+    const setupProgressFill = document.getElementById("setupProgressFill");
+    const setupLog = document.getElementById("setupLog");
+    const setupStepStatus = document.getElementById("setupStepStatus");
+    const setupDoneBtn = document.getElementById("setupDoneBtn");
+
     const pages = Array.from(document.querySelectorAll("[data-page]"));
     const navButtons = Array.from(document.querySelectorAll("[data-nav]"));
 
     let currentItems = [];
     let authState = { ok: false, username: "" };
+    let cachedLauncherHtml = null;
 
     function setStatus(target, message, tone) {
       const el = target || statusLine;
@@ -1049,11 +1389,20 @@ function createHostPage() {
         visibility.className = "item-flag " + (item.shared ? "is-shared" : "is-private");
         visibility.textContent = item.shared ? "Shared" : "Private";
 
-        const download = document.createElement("a");
-        download.href = item.downloadUrl;
+        const download = document.createElement("button");
         download.textContent = "Download";
-        download.target = "_blank";
-        download.rel = "noreferrer noopener";
+        download.addEventListener("click", async () => {
+          try {
+            download.disabled = true;
+            download.textContent = "Downloading...";
+            await blobDownload(item.downloadUrl, item.name);
+          } catch (error) {
+            setStatus(statusLine, error.message || String(error), "error");
+          } finally {
+            download.disabled = false;
+            download.textContent = "Download";
+          }
+        });
 
         if (authState.ok) {
           const actions = document.createElement("div");
@@ -1131,6 +1480,30 @@ function createHostPage() {
       renderItems();
     }
 
+    // Fetch a URL and trigger a browser download via blob URL (bypasses Chrome HTTP download warning)
+    async function blobDownload(url, filename) {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Download failed: HTTP " + response.status);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = blobUrl;
+      anchor.download = filename || "download";
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+    }
+
+    // Fetch launcher HTML as text (cached for setup flow)
+    async function fetchLauncherHtml() {
+      if (cachedLauncherHtml) return cachedLauncherHtml;
+      const response = await fetch("/download/launcher");
+      if (!response.ok) throw new Error("Could not fetch launcher: HTTP " + response.status);
+      cachedLauncherHtml = await response.text();
+      return cachedLauncherHtml;
+    }
+
     async function loadLauncherInfo(force) {
       try {
         const payload = force
@@ -1138,10 +1511,13 @@ function createHostPage() {
           : await api("/api/launcher");
         if (!payload.available) {
           setStatus(launcherStatus, payload.error || "Launcher not ready yet.", payload.error ? "error" : "warn");
-          launcherDownloadLink.classList.add("hidden");
+          launcherDownloadBtn.classList.add("hidden");
+          setupLauncherBtn.classList.add("hidden");
         } else {
           setStatus(launcherStatus, "Launcher ready for download.", "success");
-          launcherDownloadLink.classList.remove("hidden");
+          launcherDownloadBtn.classList.remove("hidden");
+          setupLauncherBtn.classList.remove("hidden");
+          cachedLauncherHtml = null; // invalidate cache on refresh
         }
         launcherVersion.textContent = payload.release?.tagName || payload.release?.name || "-";
         launcherAsset.textContent = payload.asset?.name || "-";
@@ -1151,7 +1527,8 @@ function createHostPage() {
           : "-";
       } catch (error) {
         setStatus(launcherStatus, error.message || String(error), "error");
-        launcherDownloadLink.classList.add("hidden");
+        launcherDownloadBtn.classList.add("hidden");
+        setupLauncherBtn.classList.add("hidden");
       }
     }
 
@@ -1293,6 +1670,271 @@ function createHostPage() {
       await loadLauncherInfo(true);
     });
 
+    launcherDownloadBtn.addEventListener("click", async () => {
+      try {
+        launcherDownloadBtn.disabled = true;
+        launcherDownloadBtn.textContent = "Downloading...";
+        await blobDownload("/download/launcher", "cbgames-launcher.html");
+      } catch (error) {
+        setStatus(launcherStatus, error.message || String(error), "error");
+      } finally {
+        launcherDownloadBtn.disabled = false;
+        launcherDownloadBtn.textContent = "Download Launcher";
+      }
+    });
+
+    // ─── Setup Launcher Modal ─────────────────────────────────────────────
+
+    function openSetupModal() {
+      // Populate bundle list from shared items
+      setupBundleList.innerHTML = "";
+      const sharedBundles = currentItems.filter((i) => i.shared);
+      if (!sharedBundles.length) {
+        setupBundleNote.textContent = "No shared bundles available — the launcher will open without auto-importing.";
+      } else {
+        setupBundleNote.textContent = "";
+        for (const item of sharedBundles) {
+          const label = document.createElement("label");
+          label.className = "bundle-check-item";
+          const cb = document.createElement("input");
+          cb.type = "checkbox";
+          cb.checked = true;
+          cb.value = item.id;
+          const meta = document.createElement("div");
+          meta.className = "bundle-check-item-meta";
+          const strong = document.createElement("strong");
+          strong.textContent = item.name;
+          const small = document.createElement("small");
+          small.textContent = (item.type === "bundle" ? "Bundle ZIP" : "Game ZIP") + " • " + formatBytes(item.size);
+          meta.append(strong, small);
+          label.append(cb, meta);
+          setupBundleList.append(label);
+        }
+      }
+      setupStep1.classList.remove("hidden");
+      setupStep2.classList.add("hidden");
+      setupStep3.classList.add("hidden");
+      setupModal.classList.remove("hidden");
+      setupModal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeSetupModal() {
+      setupModal.classList.add("hidden");
+      setupModal.setAttribute("aria-hidden", "true");
+    }
+
+    function appendSetupLog(text, tone) {
+      const el = document.createElement("div");
+      el.className = "setup-log-item" + (tone ? " " + tone : "");
+      el.textContent = text;
+      setupLog.append(el);
+      setupLog.scrollTop = setupLog.scrollHeight;
+    }
+
+    function setSetupProgress(pct, label) {
+      setupProgressFill.style.width = Math.min(100, Math.max(0, pct)) + "%";
+      if (label) setupProgressLabel.textContent = label;
+    }
+
+    function getSelectedBundleIds() {
+      return Array.from(setupBundleList.querySelectorAll("input[type=checkbox]:checked"))
+        .map((cb) => cb.value);
+    }
+
+    function buildAutoImportPayload(selectedIds) {
+      const hostOrigin = window.location.origin;
+      const bundles = currentItems
+        .filter((item) => item.shared && selectedIds.includes(item.id))
+        .map((item) => ({
+          id: item.id,
+          name: item.name,
+          type: item.type,
+          downloadUrl: hostOrigin + item.downloadUrl
+        }));
+      return bundles;
+    }
+
+    async function injectAndOpenLauncher(selectedIds) {
+      setupStep2.classList.add("hidden");
+      setupStep3.classList.remove("hidden");
+      setupLog.innerHTML = "";
+      setSetupProgress(40, "Registering setup with host...");
+
+      const bundles = buildAutoImportPayload(selectedIds);
+      try {
+        await api("/api/setup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ bundles })
+        });
+        appendSetupLog("Setup registered.", "ok");
+      } catch (err) {
+        setStatus(setupStepStatus, err.message || String(err), "error");
+        appendSetupLog("Failed: " + (err.message || String(err)), "err");
+        setupDoneBtn.classList.remove("hidden");
+        return;
+      }
+
+      setSetupProgress(80, "Opening launcher...");
+      window.open("/app", "_blank");
+
+      setSetupProgress(100, "Done.");
+      if (bundles.length) {
+        appendSetupLog("Launcher opened at " + window.location.origin + "/app — auto-importing " + bundles.length + " bundle(s).", "ok");
+      } else {
+        appendSetupLog("Launcher opened at " + window.location.origin + "/app.", "ok");
+      }
+      setStatus(setupStepStatus, "Launcher open at " + window.location.origin + "/app", "success");
+      setupDoneBtn.classList.remove("hidden");
+    }
+
+    async function saveAndOpenLauncher(selectedIds) {
+      if (!window.showDirectoryPicker) {
+        setupStep2.classList.add("hidden");
+        setupStep3.classList.remove("hidden");
+        setupLog.innerHTML = "";
+        setStatus(setupStepStatus, "File System Access API is not supported in this browser. Try Chrome or Edge, or use Open Without Saving.", "error");
+        setupDoneBtn.classList.remove("hidden");
+        return;
+      }
+
+      let dirHandle;
+      try {
+        dirHandle = await window.showDirectoryPicker({ mode: "readwrite" });
+      } catch (err) {
+        if (err && err.name === "AbortError") return;
+        setupStep2.classList.add("hidden");
+        setupStep3.classList.remove("hidden");
+        setupLog.innerHTML = "";
+        setStatus(setupStepStatus, "Folder selection failed: " + (err.message || String(err)), "error");
+        setupDoneBtn.classList.remove("hidden");
+        return;
+      }
+
+      setupStep2.classList.add("hidden");
+      setupStep3.classList.remove("hidden");
+      setupLog.innerHTML = "";
+      setSetupProgress(5, "Fetching launcher...");
+
+      let html;
+      try {
+        html = await fetchLauncherHtml();
+        appendSetupLog("Launcher fetched.", "ok");
+      } catch (err) {
+        setStatus(setupStepStatus, err.message || String(err), "error");
+        appendSetupLog("Failed to fetch launcher: " + (err.message || String(err)), "err");
+        setupDoneBtn.classList.remove("hidden");
+        return;
+      }
+
+      setSetupProgress(15, "Creating launcher/ folder...");
+      let subDir;
+      try {
+        subDir = await dirHandle.getDirectoryHandle("launcher", { create: true });
+        appendSetupLog("Created launcher/ folder.", "ok");
+      } catch (err) {
+        setStatus(setupStepStatus, "Could not create folder: " + (err.message || String(err)), "error");
+        appendSetupLog("Folder creation failed.", "err");
+        setupDoneBtn.classList.remove("hidden");
+        return;
+      }
+
+      // Download each bundle and save to launcher/ folder
+      const networkBundles = buildAutoImportPayload(selectedIds);
+      const localBundleNames = [];
+      const bundleCount = networkBundles.length;
+      for (let bi = 0; bi < bundleCount; bi++) {
+        const bundle = networkBundles[bi];
+        const pctStart = 20 + (bi / Math.max(bundleCount, 1)) * 60;
+        const pctEnd = 20 + ((bi + 1) / Math.max(bundleCount, 1)) * 60;
+        const fileName = bundle.name.endsWith(".zip") ? bundle.name : bundle.name + ".zip";
+        appendSetupLog("Downloading " + bundle.name + "...");
+        setSetupProgress(pctStart, "Downloading " + bundle.name + "...");
+        try {
+          const response = await fetch(bundle.downloadUrl);
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          const reader = response.body.getReader();
+          const contentLength = Number(response.headers.get("content-length") || 0);
+          const chunks = [];
+          let received = 0;
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            chunks.push(value);
+            received += value.length;
+            if (contentLength > 0) {
+              const dlPct = pctStart + (received / contentLength) * (pctEnd - pctStart);
+              setSetupProgress(dlPct, bundle.name + " — " + formatBytes(received) + " / " + formatBytes(contentLength));
+            }
+          }
+          const blob = new Blob(chunks, { type: "application/zip" });
+          const fh = await subDir.getFileHandle(fileName, { create: true });
+          const wr = await fh.createWritable();
+          await wr.write(blob);
+          await wr.close();
+          localBundleNames.push({ id: bundle.id, name: bundle.name, type: bundle.type, fileName });
+          appendSetupLog("Saved " + fileName + ".", "ok");
+        } catch (err) {
+          appendSetupLog("Failed to save " + bundle.name + ": " + (err.message || String(err)), "err");
+        }
+        setSetupProgress(pctEnd, "");
+      }
+
+      // Inject local-mode setup — launcher picks files from disk, no network needed
+      const setup = { mode: "local", bundles: localBundleNames };
+      const injection = "<script>window.__CBGAMES_HOST_SETUP__ = " + JSON.stringify(setup) + ";<\\/script>";
+      const injectedHtml = html.replace("</head>", injection + "\\n</head>");
+
+      setSetupProgress(85, "Writing index.html...");
+      try {
+        const fileHandle = await subDir.getFileHandle("index.html", { create: true });
+        const writable = await fileHandle.createWritable();
+        await writable.write(injectedHtml);
+        await writable.close();
+        appendSetupLog("Wrote launcher/index.html.", "ok");
+      } catch (err) {
+        setStatus(setupStepStatus, "Could not write file: " + (err.message || String(err)), "error");
+        appendSetupLog("File write failed.", "err");
+        setupDoneBtn.classList.remove("hidden");
+        return;
+      }
+
+      setSetupProgress(100, "Done.");
+      appendSetupLog("Open launcher/index.html — click 'Select Launcher Folder' to import " + localBundleNames.length + " bundle(s).", "ok");
+      setStatus(setupStepStatus, "launcher/ folder is ready. Open index.html from your file manager.", "success");
+      setupDoneBtn.classList.remove("hidden");
+    }
+
+    setupLauncherBtn.addEventListener("click", openSetupModal);
+    setupModalClose.addEventListener("click", closeSetupModal);
+    setupCancelBtn.addEventListener("click", closeSetupModal);
+
+    setupNextBtn.addEventListener("click", () => {
+      setupStep1.classList.add("hidden");
+      setupStep2.classList.remove("hidden");
+    });
+
+    setupBackBtn.addEventListener("click", () => {
+      setupStep2.classList.add("hidden");
+      setupStep1.classList.remove("hidden");
+    });
+
+    setupOpenOnlyBtn.addEventListener("click", async () => {
+      const ids = getSelectedBundleIds();
+      await injectAndOpenLauncher(ids);
+    });
+
+    setupPickFolderBtn.addEventListener("click", async () => {
+      const ids = getSelectedBundleIds();
+      await saveAndOpenLauncher(ids);
+    });
+
+    setupDoneBtn.addEventListener("click", closeSetupModal);
+
+    setupModal.addEventListener("click", (event) => {
+      if (event.target === setupModal) closeSetupModal();
+    });
+
     const pathToPage = {
       "/": "dashboard",
       "/bundles": "bundles",
@@ -1334,6 +1976,7 @@ let library = {
 let activeUploadCode = null;
 let authRecord = null;
 const sessions = new Map();
+let pendingSetup = null; // { bundles: [...] } — consumed on first GET /app
 let launcherCache = {
   checkedAt: 0,
   etag: "",
@@ -1813,6 +2456,52 @@ const server = http.createServer(async (req, res) => {
 
     if (method === "GET" && ["/", "/bundles", "/launcher", "/account", "/signin"].includes(pathname)) {
       sendHtml(res, 200, createHostPage());
+      return;
+    }
+
+    // Serve the launcher app at a stable URL so IndexedDB is scoped to this origin
+    if (method === "GET" && pathname === "/app") {
+      const info = await getLauncherInfo(false);
+      if (!info.asset || !info.fileName) {
+        sendHtml(res, 503, "<!doctype html><html><body style=\"font-family:sans-serif;background:#111;color:#eee;padding:2rem\"><p>Launcher not ready yet. <a href=\"/launcher\" style=\"color:#8dc4ff\">Go back</a> and sync first.</p></body></html>");
+        return;
+      }
+      const filePath = path.join(launcherDir, info.fileName);
+      let html;
+      try {
+        html = await fsp.readFile(filePath, "utf8");
+      } catch (error) {
+        sendJson(res, 404, { error: "Launcher file is missing." });
+        return;
+      }
+      if (pendingSetup) {
+        const injection = "<script>window.__CBGAMES_HOST_SETUP__ = " + JSON.stringify(pendingSetup) + ";</script>";
+        html = html.replace("</head>", injection + "\n</head>");
+        pendingSetup = null;
+      }
+      setCorsHeaders(res);
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "text/html; charset=utf-8");
+      res.end(html);
+      return;
+    }
+
+    if (method === "POST" && pathname === "/api/setup") {
+      try {
+        const body = await readJsonBody(req, 2 * 1024 * 1024);
+        if (!body || !Array.isArray(body.bundles)) {
+          sendJson(res, 400, { error: "Invalid setup payload." });
+          return;
+        }
+        pendingSetup = { bundles: body.bundles };
+        sendJson(res, 200, { ok: true });
+      } catch (error) {
+        if (error && error.code === "PAYLOAD_TOO_LARGE") {
+          sendJson(res, 413, { error: "Setup payload too large." });
+          return;
+        }
+        sendJson(res, 400, { error: error.message || "Setup failed." });
+      }
       return;
     }
 
